@@ -1,0 +1,63 @@
+RENOMMER LES ZIP RMN BRUKER — MEME PROCEDURE QUE RPE VIEWER
+===========================================================
+
+AUCUN PYTHON A INSTALLER SUR TON ORDINATEUR.
+
+1. Sur GitHub, mets app.py et requirements.txt à la racine de ton dépôt.
+2. Fais Add file > Create new file. Nom exact du fichier :
+
+   .github/workflows/build-windows.yml
+
+   Colle dedans TOUT le texte de WORKFLOW_GITHUB_A_COPIER.txt, puis Commit.
+   (Le workflow est aussi fourni tout prêt dans .github/workflows.)
+3. Actions > Build Windows EXE > Run workflow.
+4. Releases > Renommer RMN Bruker - dernière version >
+   télécharger directement Renommer_RMN_Bruker.exe.
+
+Utilisation : ouvre le .exe, sélectionne ton ZIP ou ton dossier de données
+Bruker et clique sur « Créer la sortie ». « Voir les noms » est un aperçu.
+L'archive individuelle est copiée en entier et
+seul son nom change : par exemple fgeK0002_1.zip devient
+FG002-Clean_THF_H.zip. Choisir Dossier de ZIP pour traiter 100 archives
+par lot ; les fichiers d'origine restent intacts.
+
+OPTION ZIP multi-RMN : sélectionner un gros ZIP qui contient plusieurs ZIP
+Bruker, ou plusieurs dossiers Bruker directement à l'intérieur. La sortie
+est un seul ZIP complet nommé nom_original_renommes.zip. Les ZIP intérieurs,
+ou les dossiers des spectres et leurs PDF, portent chacun un nom de la forme
+Nom_Solvant_H/C/F. Les fichiers techniques Bruker, comme fid et acqus, ainsi
+que le contenu de TOUS les fichiers sont préservés. Si la première ligne de
+title est vide, le programme reprend l'identifiant du dossier d'origine
+(exemple : fgeK0003_1_CDCl3_H). Un ZIP ne contenant que des PDF isolés,
+sans fichiers Bruker title et acqus, ne fournit pas les métadonnées requises.
+
+OPTION DOSSIER BRUKER (SANS ZIP) : clique « Dossier Bruker (sans ZIP) » et
+choisis le dossier PARENT qui contient tous les sous-dossiers des spectres.
+Exemple : dossier-parent/fgeK0002_1/fgeK0002_1/1/pdata/1/title.
+Le dossier de sortie proposé est à côté du dossier parent et s'appelle
+Renommes_RMN_Dossiers. « Créer la sortie » recopie l'ensemble de l'arborescence
+dans ce dossier. Chaque sous-dossier Bruker et ses PDF sont renommés sous la
+forme Nom_Solvant_H/C/F ; les fichiers fid, acqus, title, ainsi que les
+fichiers non Bruker, restent présents et inchangés. Il n'y a aucun ZIP à
+créer ni à extraire. Pour plusieurs milliers de spectres, une barre indique
+la progression de la copie. Le dossier final apparaît une fois la copie finie.
+Si le dossier de sortie existe déjà et contient des fichiers, choisis un
+nouveau nom de dossier dans le champ « Dossier de sortie ».
+
+POUR LE FICHIER EXEMPLE NMR(1).zip :
+1. Double-cliquer sur l'EXE Windows nouvellement téléchargé dans Releases.
+2. Cliquer sur ZIP multi-RMN et choisir NMR(1).zip.
+3. Cliquer directement sur Créer la sortie. Le bouton Voir les noms
+   n'affiche qu'un aperçu et ne crée aucun fichier.
+4. Attendre la fenêtre « ZIP créé ». Le chemin complet est affiché dedans.
+   Par défaut, le fichier est dans le dossier Renommes_RMN placé à côté du
+   fichier d'origine : Renommes_RMN/NMR(1)_renommes.zip.
+5. Si le message dit « ZIP déjà présent », ouvrir le chemin affiché ou
+   choisir un autre dossier de sortie pour relancer le traitement.
+
+Pour une grosse archive, la barre indique la progression de l'écriture.
+Le ZIP de sortie n'apparaît sous son nom définitif qu'une fois terminé ;
+une interruption ne laisse pas un faux résultat ZIP complet.
+
+Si GitHub indique que la publication de la Release est refusée, vérifier
+Settings > Actions > General > Workflow permissions (Read and write).
