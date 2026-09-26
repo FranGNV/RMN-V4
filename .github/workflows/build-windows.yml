@@ -1,0 +1,43 @@
+name: Build Windows EXE
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Recuperer les fichiers
+        uses: actions/checkout@v7
+
+      - name: Installer Python sur GitHub
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Installer les dependances sur GitHub
+        run: python -m pip install -r requirements.txt
+
+      - name: Verifier le programme
+        run: python -m py_compile app.py
+
+      - name: Compiler Renommer RMN
+        run: python -m PyInstaller --noconfirm --clean --onefile --windowed --name Renommer_RMN_Bruker app.py
+
+      - name: Publier directement le EXE dans GitHub Releases
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = "renommer-rmn-bruker-latest"
+          gh release view $tag *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag "dist/Renommer_RMN_Bruker.exe" --title "Renommer RMN Bruker - dernière version" --notes "Exécutable Windows compilé automatiquement."
+          } else {
+            gh release upload $tag "dist/Renommer_RMN_Bruker.exe" --clobber
+          }
+          if ($LASTEXITCODE -ne 0) { exit 1 }
